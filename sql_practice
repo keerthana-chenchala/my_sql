@@ -1,0 +1,2397 @@
+
+C:\xampp\mysql>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 0A2F-2202
+
+ Directory of C:\xampp\mysql
+
+05/22/2019  05:13 PM    <DIR>          .
+05/22/2019  05:13 PM    <DIR>          ..
+05/22/2019  05:13 PM    <DIR>          backup
+05/22/2019  05:16 PM    <DIR>          bin
+05/08/2019  02:19 AM            17,987 COPYING
+05/08/2019  02:19 AM            86,263 COPYING.thirdparty
+05/08/2019  02:19 AM             2,354 CREDITS
+05/28/2019  02:37 PM    <DIR>          data
+05/08/2019  02:19 AM             8,245 EXCEPTIONS-CLIENT
+05/08/2019  04:06 AM             5,057 my-huge.ini
+05/08/2019  04:06 AM            20,909 my-innodb-heavy-4G.ini
+05/08/2019  04:06 AM             5,044 my-large.ini
+05/08/2019  04:06 AM             5,055 my-medium.ini
+05/08/2019  04:06 AM             2,921 my-small.ini
+03/30/2013  05:59 PM               848 mysql_installservice.bat
+03/30/2013  05:59 PM               395 mysql_uninstallservice.bat
+05/08/2019  02:19 AM             2,196 README
+03/30/2013  05:59 PM             1,105 resetroot.bat
+05/22/2019  05:12 PM    <DIR>          scripts
+05/22/2019  05:13 PM    <DIR>          share
+              13 File(s)        158,379 bytes
+               7 Dir(s)  161,493,528,576 bytes free
+
+C:\xampp\mysql>cd bin
+
+C:\xampp\mysql\bin>mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 16
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> exit
+Bye
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 17
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| akrivia            |
+| information_schema |
+| my_app             |
+| mydata             |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| shirts_db          |
+| test               |
+| training           |
++--------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [(none)]> use training
+Database changed
+MariaDB [training]> show tables;
++--------------------+
+| Tables_in_training |
++--------------------+
+| books              |
+| students           |
++--------------------+
+2 rows in set (0.00 sec)
+
+**************************************************MY SQL CRUD****************************************************************************
+
+MariaDB [training]> create table cats(cat_id INT NOT NULL AUTO_INCREMENT,
+    ->      name   VARCHAR(100),
+    ->      breed  VARCHAR(100),
+    ->      age    INT,
+    ->      PRIMARY KEY (cat_id)
+    ->   );
+Query OK, 0 rows affected (0.15 sec)
+
+MariaDB [training]> INSERT INTO cats(name, breed, age)
+    -> VALUES ('Ringo', 'Tabby', 4),
+    ->        ('Cindy', 'Maine Coon', 10),
+    ->        ('Dumbledore', 'Maine Coon', 11),
+    ->        ('Egg', 'Persian', 4),
+    ->        ('Misty', 'Tabby', 13),
+    ->        ('George Michael', 'Ragdoll', 9),
+    ->        ('Jackson', 'Sphynx', 7);
+Query OK, 7 rows affected (0.04 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [training]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | Tabby      |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | Tabby      |   13 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | Jackson        | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> select name from cats;
++----------------+
+| name           |
++----------------+
+| Ringo          |
+| Cindy          |
+| Dumbledore     |
+| Egg            |
+| Misty          |
+| George Michael |
+| Jackson        |
++----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> select name,age from cats;
++----------------+------+
+| name           | age  |
++----------------+------+
+| Ringo          |    4 |
+| Cindy          |   10 |
+| Dumbledore     |   11 |
+| Egg            |    4 |
+| Misty          |   13 |
+| George Michael |    9 |
+| Jackson        |    7 |
++----------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> select * from cats where age=4;
++--------+-------+---------+------+
+| cat_id | name  | breed   | age  |
++--------+-------+---------+------+
+|      1 | Ringo | Tabby   |    4 |
+|      4 | Egg   | Persian |    4 |
++--------+-------+---------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [training]> select * from cats where name="egg";
++--------+------+---------+------+
+| cat_id | name | breed   | age  |
++--------+------+---------+------+
+|      4 | Egg  | Persian |    4 |
++--------+------+---------+------+
+1 row in set (0.00 sec)
+
+MariaDB [training]> select cat_id from cats;
++--------+
+| cat_id |
++--------+
+|      1 |
+|      2 |
+|      3 |
+|      4 |
+|      5 |
+|      6 |
+|      7 |
++--------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> select name,breed from cats;
++----------------+------------+
+| name           | breed      |
++----------------+------------+
+| Ringo          | Tabby      |
+| Cindy          | Maine Coon |
+| Dumbledore     | Maine Coon |
+| Egg            | Persian    |
+| Misty          | Tabby      |
+| George Michael | Ragdoll    |
+| Jackson        | Sphynx     |
++----------------+------------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> select name,age from cats where breed="tabby";
++-------+------+
+| name  | age  |
++-------+------+
+| Ringo |    4 |
+| Misty |   13 |
++-------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [training]> select cat_id,age from cats where cat_id=age;
++--------+------+
+| cat_id | age  |
++--------+------+
+|      4 |    4 |
+|      7 |    7 |
++--------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [training]> SELECT cat_id AS id, name FROM cats;
++----+----------------+
+| id | name           |
++----+----------------+
+|  1 | Ringo          |
+|  2 | Cindy          |
+|  3 | Dumbledore     |
+|  4 | Egg            |
+|  5 | Misty          |
+|  6 | George Michael |
+|  7 | Jackson        |
++----+----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> update cats set breed="shorthair" where breed="tabby";
+Query OK, 2 rows affected (0.05 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [training]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | shorthair  |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | shorthair  |   13 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | Jackson        | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> update cats set age=14 where name="misty";
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [training]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | shorthair  |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | Jackson        | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> update cats set name="jack" where name="jackson";
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [training]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      1 | Ringo          | shorthair  |    4 |
+|      2 | Cindy          | Maine Coon |   10 |
+|      3 | Dumbledore     | Maine Coon |   11 |
+|      4 | Egg            | Persian    |    4 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | jack           | Sphynx     |    7 |
++--------+----------------+------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> update cats set breed="British shorthair" where name="Ringo";
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [training]> select * from cats;
++--------+----------------+-------------------+------+
+| cat_id | name           | breed             | age  |
++--------+----------------+-------------------+------+
+|      1 | Ringo          | British shorthair |    4 |
+|      2 | Cindy          | Maine Coon        |   10 |
+|      3 | Dumbledore     | Maine Coon        |   11 |
+|      4 | Egg            | Persian           |    4 |
+|      5 | Misty          | shorthair         |   14 |
+|      6 | George Michael | Ragdoll           |    9 |
+|      7 | jack           | Sphynx            |    7 |
++--------+----------------+-------------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> update cats set age=12 where breed="Maine Coon";
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [training]> select * from cats;
++--------+----------------+-------------------+------+
+| cat_id | name           | breed             | age  |
++--------+----------------+-------------------+------+
+|      1 | Ringo          | British shorthair |    4 |
+|      2 | Cindy          | Maine Coon        |   12 |
+|      3 | Dumbledore     | Maine Coon        |   12 |
+|      4 | Egg            | Persian           |    4 |
+|      5 | Misty          | shorthair         |   14 |
+|      6 | George Michael | Ragdoll           |    9 |
+|      7 | jack           | Sphynx            |    7 |
++--------+----------------+-------------------+------+
+7 rows in set (0.00 sec)
+
+MariaDB [training]> delete from cats where name="egg";
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [training]> select * from cats;
++--------+----------------+-------------------+------+
+| cat_id | name           | breed             | age  |
++--------+----------------+-------------------+------+
+|      1 | Ringo          | British shorthair |    4 |
+|      2 | Cindy          | Maine Coon        |   12 |
+|      3 | Dumbledore     | Maine Coon        |   12 |
+|      5 | Misty          | shorthair         |   14 |
+|      6 | George Michael | Ragdoll           |    9 |
+|      7 | jack           | Sphynx            |    7 |
++--------+----------------+-------------------+------+
+6 rows in set (0.00 sec)
+
+MariaDB [training]> delete from cats where age=4;
+Query OK, 1 row affected (0.15 sec)
+
+MariaDB [training]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      2 | Cindy          | Maine Coon |   12 |
+|      3 | Dumbledore     | Maine Coon |   12 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
+|      7 | jack           | Sphynx     |    7 |
++--------+----------------+------------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [training]> delete from cats where age=cat_id;
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [training]> select * from cats;
++--------+----------------+------------+------+
+| cat_id | name           | breed      | age  |
++--------+----------------+------------+------+
+|      2 | Cindy          | Maine Coon |   12 |
+|      3 | Dumbledore     | Maine Coon |   12 |
+|      5 | Misty          | shorthair  |   14 |
+|      6 | George Michael | Ragdoll    |    9 |
++--------+----------------+------------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [training]> delete from cats;
+Query OK, 4 rows affected (0.04 sec)
+
+MariaDB [training]> select * from cats;
+Empty set (0.00 sec)
+
+MariaDB [training]> show tables;
++--------------------+
+| Tables_in_training |
++--------------------+
+| books              |
+| cats               |
+| students           |
++--------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [training]> drop table cats;
+Query OK, 0 rows affected (0.30 sec)
+
+MariaDB [training]> show tables;
++--------------------+
+| Tables_in_training |
++--------------------+
+| books              |
+| students           |
++--------------------+
+2 rows in set (0.00 sec)
+
+*********************************************************************************************************************************
+
+MariaDB [training]> show tables;
++--------------------+
+| Tables_in_training |
++--------------------+
+| books              |
+| cats               |
+| students           |
++--------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [training]> drop table cats;
+Query OK, 0 rows affected (0.30 sec)
+
+MariaDB [training]> show tables;
++--------------------+
+| Tables_in_training |
++--------------------+
+| books              |
+| students           |
++--------------------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [training]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| akrivia            |
+| information_schema |
+| my_app             |
+| mydata             |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| shirts_db          |
+| test               |
+| training           |
++--------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [training]> use shirts_db
+Database changed
+MariaDB [shirts_db]> show tables;
++---------------------+
+| Tables_in_shirts_db |
++---------------------+
+| shirts              |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-----------+------------+-----------+
+| shirt_id | article    | color     | shirt_size | last_worn |
++----------+------------+-----------+------------+-----------+
+|        1 | t-shirt    | off white | XS         |        10 |
+|        3 | polo shirt | black     | L          |        10 |
+|        5 | t-shirt    | pink      | S          |         0 |
+|        6 | polo shirt | red       | L          |         5 |
+|        9 | polo shirt | purple    | L          |        50 |
++----------+------------+-----------+------------+-----------+
+5 rows in set (0.02 sec)
+
+MariaDB [shirts_db]> drop table shirts;
+Query OK, 0 rows affected (0.12 sec)
+
+MariaDB [shirts_db]> show tables;
+Empty set (0.00 sec)
+
+MariaDB [shirts_db]> create table shirts(shirt_id int not null auto_increment primary key,article varchar(40),color varchar(40),shirt_size varchar(10),last_worn int);
+Query OK, 0 rows affected (0.12 sec)
+
+MariaDB [shirts_db]> insert into shirts(article,color,shirt_size,last_worn) values('t-shirt', 'white', 'S', 10),
+    -> ('t-shirt', 'green', 'S', 200),
+    -> ('polo shirt', 'black', 'M', 10),
+    -> ('tank top', 'blue', 'S', 50),
+    -> ('t-shirt', 'pink', 'S', 0),
+    -> ('polo shirt', 'red', 'M', 5),
+    -> ('tank top', 'white', 'S', 200),
+    -> ('tank top', 'blue', 'M', 15);
+Query OK, 8 rows affected (0.04 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-------+------------+-----------+
+| shirt_id | article    | color | shirt_size | last_worn |
++----------+------------+-------+------------+-----------+
+|        1 | t-shirt    | white | S          |        10 |
+|        2 | t-shirt    | green | S          |       200 |
+|        3 | polo shirt | black | M          |        10 |
+|        4 | tank top   | blue  | S          |        50 |
+|        5 | t-shirt    | pink  | S          |         0 |
+|        6 | polo shirt | red   | M          |         5 |
+|        7 | tank top   | white | S          |       200 |
+|        8 | tank top   | blue  | M          |        15 |
++----------+------------+-------+------------+-----------+
+8 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> insert into shirts(article,color,shirt_size,last_worn) values("polo shirt","purple","M",50);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+------------+-----------+
+| shirt_id | article    | color  | shirt_size | last_worn |
++----------+------------+--------+------------+-----------+
+|        1 | t-shirt    | white  | S          |        10 |
+|        2 | t-shirt    | green  | S          |       200 |
+|        3 | polo shirt | black  | M          |        10 |
+|        4 | tank top   | blue   | S          |        50 |
+|        5 | t-shirt    | pink   | S          |         0 |
+|        6 | polo shirt | red    | M          |         5 |
+|        7 | tank top   | white  | S          |       200 |
+|        8 | tank top   | blue   | M          |        15 |
+|        9 | polo shirt | purple | M          |        50 |
++----------+------------+--------+------------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> select article,color from shirts;
++------------+--------+
+| article    | color  |
++------------+--------+
+| t-shirt    | white  |
+| t-shirt    | green  |
+| polo shirt | black  |
+| tank top   | blue   |
+| t-shirt    | pink   |
+| polo shirt | red    |
+| tank top   | white  |
+| tank top   | blue   |
+| polo shirt | purple |
++------------+--------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> select article,color,shirt_size,last_worn from shirts;
++------------+--------+------------+-----------+
+| article    | color  | shirt_size | last_worn |
++------------+--------+------------+-----------+
+| t-shirt    | white  | S          |        10 |
+| t-shirt    | green  | S          |       200 |
+| polo shirt | black  | M          |        10 |
+| tank top   | blue   | S          |        50 |
+| t-shirt    | pink   | S          |         0 |
+| polo shirt | red    | M          |         5 |
+| tank top   | white  | S          |       200 |
+| tank top   | blue   | M          |        15 |
+| polo shirt | purple | M          |        50 |
++------------+--------+------------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set shirt_size="L" where article="polo shirt";
+Query OK, 3 rows affected (0.03 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+------------+-----------+
+| shirt_id | article    | color  | shirt_size | last_worn |
++----------+------------+--------+------------+-----------+
+|        1 | t-shirt    | white  | S          |        10 |
+|        2 | t-shirt    | green  | S          |       200 |
+|        3 | polo shirt | black  | L          |        10 |
+|        4 | tank top   | blue   | S          |        50 |
+|        5 | t-shirt    | pink   | S          |         0 |
+|        6 | polo shirt | red    | L          |         5 |
+|        7 | tank top   | white  | S          |       200 |
+|        8 | tank top   | blue   | M          |        15 |
+|        9 | polo shirt | purple | L          |        50 |
++----------+------------+--------+------------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set last_worn=0 where last_worn<15;
+Query OK, 3 rows affected (0.03 sec)
+Rows matched: 4  Changed: 3  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+--------+------------+-----------+
+| shirt_id | article    | color  | shirt_size | last_worn |
++----------+------------+--------+------------+-----------+
+|        1 | t-shirt    | white  | S          |         0 |
+|        2 | t-shirt    | green  | S          |       200 |
+|        3 | polo shirt | black  | L          |         0 |
+|        4 | tank top   | blue   | S          |        50 |
+|        5 | t-shirt    | pink   | S          |         0 |
+|        6 | polo shirt | red    | L          |         0 |
+|        7 | tank top   | white  | S          |       200 |
+|        8 | tank top   | blue   | M          |        15 |
+|        9 | polo shirt | purple | L          |        50 |
++----------+------------+--------+------------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> update shirts set shirt_size="XS" where color="white";
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [shirts_db]> update shirts set color="off white" where color="white";
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [shirts_db]> select * from shirts;
++----------+------------+-----------+------------+-----------+
+| shirt_id | article    | color     | shirt_size | last_worn |
++----------+------------+-----------+------------+-----------+
+|        1 | t-shirt    | off white | XS         |         0 |
+|        2 | t-shirt    | green     | S          |       200 |
+|        3 | polo shirt | black     | L          |         0 |
+|        4 | tank top   | blue      | S          |        50 |
+|        5 | t-shirt    | pink      | S          |         0 |
+|        6 | polo shirt | red       | L          |         0 |
+|        7 | tank top   | off white | XS         |       200 |
+|        8 | tank top   | blue      | M          |        15 |
+|        9 | polo shirt | purple    | L          |        50 |
++----------+------------+-----------+------------+-----------+
+9 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> delete from shirts where last_worn<200;
+Query OK, 7 rows affected (0.03 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+----------+-----------+------------+-----------+
+| shirt_id | article  | color     | shirt_size | last_worn |
++----------+----------+-----------+------------+-----------+
+|        2 | t-shirt  | green     | S          |       200 |
+|        7 | tank top | off white | XS         |       200 |
++----------+----------+-----------+------------+-----------+
+2 rows in set (0.00 sec)
+
+MariaDB [shirts_db]> delete from shirts where article="tank top";
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [shirts_db]> select * from shirts;
++----------+---------+-------+------------+-----------+
+| shirt_id | article | color | shirt_size | last_worn |
++----------+---------+-------+------------+-----------+
+|        2 | t-shirt | green | S          |       200 |
++----------+---------+-------+------------+-----------+
+1 row in set (0.00 sec)
+
+MariaDB [shirts_db]> delete from shirts;
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [shirts_db]> drop table shirts;
+Query OK, 0 rows affected (0.09 sec)
+
+MariaDB [shirts_db]> show tables;
+Empty set (0.00 sec)
+
+****************************************************  STRING FUNCTIONS *************************************************************
+
+MariaDB [(none)]> use mydata
+Database changed
+MariaDB [mydata]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                                         | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                           | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                                | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select author_fname,author_lname from books;
++--------------+----------------+
+| author_fname | author_lname   |
++--------------+----------------+
+| Jhumpa       | Lahiri         |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Jhumpa       | Lahiri         |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| Michael      | Chabon         |
+| Patti        | Smith          |
+| Dave         | Eggers         |
+| Neil         | Gaiman         |
+| Raymond      | Carver         |
+| Raymond      | Carver         |
+| Don          | DeLillo        |
+| John         | Steinbeck      |
+| David        | Foster Wallace |
+| David        | Foster Wallace |
+| Dan          | Harris         |
+| Freida       | Harris         |
+| George       | Saunders       |
++--------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT
+    ->   CONCAT(author_fname, ' ', author_lname)
+    -> FROM books;
++-----------------------------------------+
+| CONCAT(author_fname, ' ', author_lname) |
++-----------------------------------------+
+| Jhumpa Lahiri                           |
+| Neil Gaiman                             |
+| Neil Gaiman                             |
+| Jhumpa Lahiri                           |
+| Dave Eggers                             |
+| Dave Eggers                             |
+| Michael Chabon                          |
+| Patti Smith                             |
+| Dave Eggers                             |
+| Neil Gaiman                             |
+| Raymond Carver                          |
+| Raymond Carver                          |
+| Don DeLillo                             |
+| John Steinbeck                          |
+| David Foster Wallace                    |
+| David Foster Wallace                    |
+| Dan Harris                              |
+| Freida Harris                           |
+| George Saunders                         |
++-----------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT
+    ->     CONCAT_WS(' - ', title, author_fname, author_lname)
+    -> FROM books;
++------------------------------------------------------------------------+
+| CONCAT_WS(' - ', title, author_fname, author_lname)                    |
++------------------------------------------------------------------------+
+| The Namesake - Jhumpa - Lahiri                                         |
+| Norse Mythology - Neil - Gaiman                                        |
+| American Gods - Neil - Gaiman                                          |
+| Interpreter of Maladies - Jhumpa - Lahiri                              |
+| A Hologram for the King: A Novel - Dave - Eggers                       |
+| The Circle - Dave - Eggers                                             |
+| The Amazing Adventures of Kavalier & Clay - Michael - Chabon           |
+| Just Kids - Patti - Smith                                              |
+| A Heartbreaking Work of Staggering Genius - Dave - Eggers              |
+| Coraline - Neil - Gaiman                                               |
+| What We Talk About When We Talk About Love: Stories - Raymond - Carver |
+| Where I'm Calling From: Selected Stories - Raymond - Carver            |
+| White Noise - Don - DeLillo                                            |
+| Cannery Row - John - Steinbeck                                         |
+| Oblivion: Stories - David - Foster Wallace                             |
+| Consider the Lobster - David - Foster Wallace                          |
+| 10% Happier - Dan - Harris                                             |
+| fake_book - Freida - Harris                                            |
+| Lincoln In The Bardo - George - Saunders                               |
++------------------------------------------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(substring(title,1,10),'...') from books;
++-------------------------------------+
+| concat(substring(title,1,10),'...') |
++-------------------------------------+
+| The Namesa...                       |
+| Norse Myth...                       |
+| American G...                       |
+| Interprete...                       |
+| A Hologram...                       |
+| The Circle...                       |
+| The Amazin...                       |
+| Just Kids...                        |
+| A Heartbre...                       |
+| Coraline...                         |
+| What We Ta...                       |
+| Where I'm ...                       |
+| White Nois...                       |
+| Cannery Ro...                       |
+| Oblivion: ...                       |
+| Consider t...                       |
+| 10% Happie...                       |
+| fake_book...                        |
+| Lincoln In...                       |
++-------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(substring(title,1,10),'...') as short_title from books;
++---------------+
+| short_title   |
++---------------+
+| The Namesa... |
+| Norse Myth... |
+| American G... |
+| Interprete... |
+| A Hologram... |
+| The Circle... |
+| The Amazin... |
+| Just Kids...  |
+| A Heartbre... |
+| Coraline...   |
+| What We Ta... |
+| Where I'm ... |
+| White Nois... |
+| Cannery Ro... |
+| Oblivion: ... |
+| Consider t... |
+| 10% Happie... |
+| fake_book...  |
+| Lincoln In... |
++---------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select replace(title,' ','->') as title from books;
++--------------------------------------------------------------+
+| title                                                        |
++--------------------------------------------------------------+
+| The->Namesake                                                |
+| Norse->Mythology                                             |
+| American->Gods                                               |
+| Interpreter->of->Maladies                                    |
+| A->Hologram->for->the->King:->A->Novel                       |
+| The->Circle                                                  |
+| The->Amazing->Adventures->of->Kavalier->&->Clay              |
+| Just->Kids                                                   |
+| A->Heartbreaking->Work->of->Staggering->Genius               |
+| Coraline                                                     |
+| What->We->Talk->About->When->We->Talk->About->Love:->Stories |
+| Where->I'm->Calling->From:->Selected->Stories                |
+| White->Noise                                                 |
+| Cannery->Row                                                 |
+| Oblivion:->Stories                                           |
+| Consider->the->Lobster                                       |
+| 10%->Happier                                                 |
+| fake_book                                                    |
+| Lincoln->In->The->Bardo                                      |
++--------------------------------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select author_lname as forwards,reverse(author_lname) as backwards from books;
++----------------+----------------+
+| forwards       | backwards      |
++----------------+----------------+
+| Lahiri         | irihaL         |
+| Gaiman         | namiaG         |
+| Gaiman         | namiaG         |
+| Lahiri         | irihaL         |
+| Eggers         | sreggE         |
+| Eggers         | sreggE         |
+| Chabon         | nobahC         |
+| Smith          | htimS          |
+| Eggers         | sreggE         |
+| Gaiman         | namiaG         |
+| Carver         | revraC         |
+| Carver         | revraC         |
+| DeLillo        | olliLeD        |
+| Steinbeck      | kcebnietS      |
+| Foster Wallace | ecallaW retsoF |
+| Foster Wallace | ecallaW retsoF |
+| Harris         | sirraH         |
+| Harris         | sirraH         |
+| Saunders       | srednuaS       |
++----------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(upper(author_fname),' ',upper(author_lname)) as full_name_in_caps from books;
++----------------------+
+| full_name_in_caps    |
++----------------------+
+| JHUMPA LAHIRI        |
+| NEIL GAIMAN          |
+| NEIL GAIMAN          |
+| JHUMPA LAHIRI        |
+| DAVE EGGERS          |
+| DAVE EGGERS          |
+| MICHAEL CHABON       |
+| PATTI SMITH          |
+| DAVE EGGERS          |
+| NEIL GAIMAN          |
+| RAYMOND CARVER       |
+| RAYMOND CARVER       |
+| DON DELILLO          |
+| JOHN STEINBECK       |
+| DAVID FOSTER WALLACE |
+| DAVID FOSTER WALLACE |
+| DAN HARRIS           |
+| FREIDA HARRIS        |
+| GEORGE SAUNDERS      |
++----------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(title,' was released in ',released_year) as blurb from books;
++--------------------------------------------------------------------------+
+| blurb                                                                    |
++--------------------------------------------------------------------------+
+| The Namesake was released in 2003                                        |
+| Norse Mythology was released in 2016                                     |
+| American Gods was released in 2001                                       |
+| Interpreter of Maladies was released in 1996                             |
+| A Hologram for the King: A Novel was released in 2012                    |
+| The Circle was released in 2013                                          |
+| The Amazing Adventures of Kavalier & Clay was released in 2000           |
+| Just Kids was released in 2010                                           |
+| A Heartbreaking Work of Staggering Genius was released in 2001           |
+| Coraline was released in 2003                                            |
+| What We Talk About When We Talk About Love: Stories was released in 1981 |
+| Where I'm Calling From: Selected Stories was released in 1989            |
+| White Noise was released in 1985                                         |
+| Cannery Row was released in 1945                                         |
+| Oblivion: Stories was released in 2004                                   |
+| Consider the Lobster was released in 2005                                |
+| 10% Happier was released in 2014                                         |
+| fake_book was released in 2001                                           |
+| Lincoln In The Bardo was released in 2017                                |
++--------------------------------------------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,char_length(title) as character_count from books;
++-----------------------------------------------------+-----------------+
+| title                                               | character_count |
++-----------------------------------------------------+-----------------+
+| The Namesake                                        |              12 |
+| Norse Mythology                                     |              15 |
+| American Gods                                       |              13 |
+| Interpreter of Maladies                             |              23 |
+| A Hologram for the King: A Novel                    |              32 |
+| The Circle                                          |              10 |
+| The Amazing Adventures of Kavalier & Clay           |              41 |
+| Just Kids                                           |               9 |
+| A Heartbreaking Work of Staggering Genius           |              41 |
+| Coraline                                            |               8 |
+| What We Talk About When We Talk About Love: Stories |              51 |
+| Where I'm Calling From: Selected Stories            |              40 |
+| White Noise                                         |              11 |
+| Cannery Row                                         |              11 |
+| Oblivion: Stories                                   |              17 |
+| Consider the Lobster                                |              20 |
+| 10% Happier                                         |              11 |
+| fake_book                                           |               9 |
+| Lincoln In The Bardo                                |              20 |
++-----------------------------------------------------+-----------------+
+19 rows in set (0.02 sec)
+
+MariaDB [mydata]> select concat(substring(title,1,10),'...') as short_title,concat(author_fname,',',author_lname),concat(stock_quantity,' in stock') as quantity from books where released_year=2001;
++---------------+---------------------------------------+--------------+
+| short_title   | concat(author_fname,',',author_lname) | quantity     |
++---------------+---------------------------------------+--------------+
+| American G... | Neil,Gaiman                           | 12 in stock  |
+| A Heartbre... | Dave,Eggers                           | 104 in stock |
+| fake_book...  | Freida,Harris                         | 287 in stock |
++---------------+---------------------------------------+--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT DISTINCT author_lname FROM books;
++----------------+
+| author_lname   |
++----------------+
+| Lahiri         |
+| Gaiman         |
+| Eggers         |
+| Chabon         |
+| Smith          |
+| Carver         |
+| DeLillo        |
+| Steinbeck      |
+| Foster Wallace |
+| Harris         |
+| Saunders       |
++----------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT author_lname FROM books ORDER BY author_lname;
++----------------+
+| author_lname   |
++----------------+
+| Carver         |
+| Carver         |
+| Chabon         |
+| DeLillo        |
+| Eggers         |
+| Eggers         |
+| Eggers         |
+| Foster Wallace |
+| Foster Wallace |
+| Gaiman         |
+| Gaiman         |
+| Gaiman         |
+| Harris         |
+| Harris         |
+| Lahiri         |
+| Lahiri         |
+| Saunders       |
+| Smith          |
+| Steinbeck      |
++----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT author_lname FROM books ORDER BY author_lname DESC;
++----------------+
+| author_lname   |
++----------------+
+| Steinbeck      |
+| Smith          |
+| Saunders       |
+| Lahiri         |
+| Lahiri         |
+| Harris         |
+| Harris         |
+| Gaiman         |
+| Gaiman         |
+| Gaiman         |
+| Foster Wallace |
+| Foster Wallace |
+| Eggers         |
+| Eggers         |
+| Eggers         |
+| DeLillo        |
+| Chabon         |
+| Carver         |
+| Carver         |
++----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT released_year FROM books ORDER BY released_year;
++---------------+
+| released_year |
++---------------+
+|          1945 |
+|          1981 |
+|          1985 |
+|          1989 |
+|          1996 |
+|          2000 |
+|          2001 |
+|          2001 |
+|          2001 |
+|          2003 |
+|          2003 |
+|          2004 |
+|          2005 |
+|          2010 |
+|          2012 |
+|          2013 |
+|          2014 |
+|          2016 |
+|          2017 |
++---------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, author_fname, author_lname
+    -> FROM books ORDER BY 2;
++-----------------------------------------------------+--------------+----------------+
+| title                                               | author_fname | author_lname   |
++-----------------------------------------------------+--------------+----------------+
+| 10% Happier                                         | Dan          | Harris         |
+| A Hologram for the King: A Novel                    | Dave         | Eggers         |
+| The Circle                                          | Dave         | Eggers         |
+| A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |
+| Consider the Lobster                                | David        | Foster Wallace |
+| Oblivion: Stories                                   | David        | Foster Wallace |
+| White Noise                                         | Don          | DeLillo        |
+| fake_book                                           | Freida       | Harris         |
+| Lincoln In The Bardo                                | George       | Saunders       |
+| The Namesake                                        | Jhumpa       | Lahiri         |
+| Interpreter of Maladies                             | Jhumpa       | Lahiri         |
+| Cannery Row                                         | John         | Steinbeck      |
+| The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |
+| American Gods                                       | Neil         | Gaiman         |
+| Norse Mythology                                     | Neil         | Gaiman         |
+| Coraline                                            | Neil         | Gaiman         |
+| Just Kids                                           | Patti        | Smith          |
+| What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |
+| Where I'm Calling From: Selected Stories            | Raymond      | Carver         |
++-----------------------------------------------------+--------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT author_fname, author_lname FROM books
+    -> ORDER BY author_lname, author_fname;
++--------------+----------------+
+| author_fname | author_lname   |
++--------------+----------------+
+| Raymond      | Carver         |
+| Raymond      | Carver         |
+| Michael      | Chabon         |
+| Don          | DeLillo        |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| David        | Foster Wallace |
+| David        | Foster Wallace |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Dan          | Harris         |
+| Freida       | Harris         |
+| Jhumpa       | Lahiri         |
+| Jhumpa       | Lahiri         |
+| George       | Saunders       |
+| Patti        | Smith          |
+| John         | Steinbeck      |
++--------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> ORDER BY released_year DESC LIMIT 5;
++----------------------------------+---------------+
+| title                            | released_year |
++----------------------------------+---------------+
+| Lincoln In The Bardo             |          2017 |
+| Norse Mythology                  |          2016 |
+| 10% Happier                      |          2014 |
+| The Circle                       |          2013 |
+| A Hologram for the King: A Novel |          2012 |
++----------------------------------+---------------+
+5 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> ORDER BY released_year DESC LIMIT 0,5;
++----------------------------------+---------------+
+| title                            | released_year |
++----------------------------------+---------------+
+| Lincoln In The Bardo             |          2017 |
+| Norse Mythology                  |          2016 |
+| 10% Happier                      |          2014 |
+| The Circle                       |          2013 |
+| A Hologram for the King: A Novel |          2012 |
++----------------------------------+---------------+
+5 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> ORDER BY released_year DESC LIMIT 5,7;
++-------------------------------------------+---------------+
+| title                                     | released_year |
++-------------------------------------------+---------------+
+| Just Kids                                 |          2010 |
+| Consider the Lobster                      |          2005 |
+| Oblivion: Stories                         |          2004 |
+| Coraline                                  |          2003 |
+| The Namesake                              |          2003 |
+| fake_book                                 |          2001 |
+| A Heartbreaking Work of Staggering Genius |          2001 |
++-------------------------------------------+---------------+
+7 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title from books where title like "%stories%" ;
++-----------------------------------------------------+
+| title                                               |
++-----------------------------------------------------+
+| What We Talk About When We Talk About Love: Stories |
+| Where I'm Calling From: Selected Stories            |
+| Oblivion: Stories                                   |
++-----------------------------------------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,pages from books where pages=max(pages);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [mydata]> select title,pages from books where max(pages);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [mydata]> select title,pages from books where pages=(select max(pages) from books);
++-------------------------------------------+-------+
+| title                                     | pages |
++-------------------------------------------+-------+
+| The Amazing Adventures of Kavalier & Clay |   634 |
++-------------------------------------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select concat(title,' - ',released_year) as summary from books;
++------------------------------------------------------------+
+| summary                                                    |
++------------------------------------------------------------+
+| The Namesake - 2003                                        |
+| Norse Mythology - 2016                                     |
+| American Gods - 2001                                       |
+| Interpreter of Maladies - 1996                             |
+| A Hologram for the King: A Novel - 2012                    |
+| The Circle - 2013                                          |
+| The Amazing Adventures of Kavalier & Clay - 2000           |
+| Just Kids - 2010                                           |
+| A Heartbreaking Work of Staggering Genius - 2001           |
+| Coraline - 2003                                            |
+| What We Talk About When We Talk About Love: Stories - 1981 |
+| Where I'm Calling From: Selected Stories - 1989            |
+| White Noise - 1985                                         |
+| Cannery Row - 1945                                         |
+| Oblivion: Stories - 2004                                   |
+| Consider the Lobster - 2005                                |
+| 10% Happier - 2014                                         |
+| fake_book - 2001                                           |
+| Lincoln In The Bardo - 2017                                |
++------------------------------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(title,' - ',released_year) as summary from books ordre by released_year limit 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'by released_year limit 3' at line 1
+MariaDB [mydata]> select concat(title,' - ',released_year) as summary from books order by released_year limit 3;
++------------------------------------------------------------+
+| summary                                                    |
++------------------------------------------------------------+
+| Cannery Row - 1945                                         |
+| What We Talk About When We Talk About Love: Stories - 1981 |
+| White Noise - 1985                                         |
++------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(title,' - ',released_year) as summary from books order by released_year desc limit 3;
++-----------------------------+
+| summary                     |
++-----------------------------+
+| Lincoln In The Bardo - 2017 |
+| Norse Mythology - 2016      |
+| 10% Happier - 2014          |
++-----------------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books where author_lname like "% %";
++----------------------+----------------+
+| title                | author_lname   |
++----------------------+----------------+
+| Oblivion: Stories    | Foster Wallace |
+| Consider the Lobster | Foster Wallace |
++----------------------+----------------+
+2 rows in set (0.00 sec)
+
+MariaDB [mydata]> select,title,released_year,stock_quantity from books order by stock_quantity limit 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'title,released_year,stock_quantity from books order by stock_quantity limit 3' at line 1
+MariaDB [mydata]> select,title,released_year,stock_quantity from books order by stock_quantity desc limit 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'title,released_year,stock_quantity from books order by stock_quantity desc limit' at line 1
+MariaDB [mydata]> select title,released_year,stock_quantity from books order by stock_quantity desc limit 3;
++----------------------+---------------+----------------+
+| title                | released_year | stock_quantity |
++----------------------+---------------+----------------+
+| Lincoln In The Bardo |          2017 |           1000 |
+| fake_book            |          2001 |            287 |
+| Oblivion: Stories    |          2004 |            172 |
++----------------------+---------------+----------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,released_year,stock_quantity from books order by stock_quantity limit 3;
++-----------------------------------------------------+---------------+----------------+
+| title                                               | released_year | stock_quantity |
++-----------------------------------------------------+---------------+----------------+
+| Where I'm Calling From: Selected Stories            |          1989 |             12 |
+| American Gods                                       |          2001 |             12 |
+| What We Talk About When We Talk About Love: Stories |          1981 |             23 |
++-----------------------------------------------------+---------------+----------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books order by title,author_lname;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| 10% Happier                                         | Harris         |
+| A Heartbreaking Work of Staggering Genius           | Eggers         |
+| A Hologram for the King: A Novel                    | Eggers         |
+| American Gods                                       | Gaiman         |
+| Cannery Row                                         | Steinbeck      |
+| Consider the Lobster                                | Foster Wallace |
+| Coraline                                            | Gaiman         |
+| fake_book                                           | Harris         |
+| Interpreter of Maladies                             | Lahiri         |
+| Just Kids                                           | Smith          |
+| Lincoln In The Bardo                                | Saunders       |
+| Norse Mythology                                     | Gaiman         |
+| Oblivion: Stories                                   | Foster Wallace |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| The Circle                                          | Eggers         |
+| The Namesake                                        | Lahiri         |
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| Where I'm Calling From: Selected Stories            | Carver         |
+| White Noise                                         | DeLillo        |
++-----------------------------------------------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books order by author_lname,title;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| Where I'm Calling From: Selected Stories            | Carver         |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| White Noise                                         | DeLillo        |
+| A Heartbreaking Work of Staggering Genius           | Eggers         |
+| A Hologram for the King: A Novel                    | Eggers         |
+| The Circle                                          | Eggers         |
+| Consider the Lobster                                | Foster Wallace |
+| Oblivion: Stories                                   | Foster Wallace |
+| American Gods                                       | Gaiman         |
+| Coraline                                            | Gaiman         |
+| Norse Mythology                                     | Gaiman         |
+| 10% Happier                                         | Harris         |
+| fake_book                                           | Harris         |
+| Interpreter of Maladies                             | Lahiri         |
+| The Namesake                                        | Lahiri         |
+| Lincoln In The Bardo                                | Saunders       |
+| Just Kids                                           | Smith          |
+| Cannery Row                                         | Steinbeck      |
++-----------------------------------------------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat("MY FAVORITE AUTHOR IS ",upper(author_fname),' ',upper(author_fname)) from books;
++------------------------------------------------------------------------------+
+| concat("MY FAVORITE AUTHOR IS ",upper(author_fname),' ',upper(author_fname)) |
++------------------------------------------------------------------------------+
+| MY FAVORITE AUTHOR IS JHUMPA JHUMPA                                          |
+| MY FAVORITE AUTHOR IS NEIL NEIL                                              |
+| MY FAVORITE AUTHOR IS NEIL NEIL                                              |
+| MY FAVORITE AUTHOR IS JHUMPA JHUMPA                                          |
+| MY FAVORITE AUTHOR IS DAVE DAVE                                              |
+| MY FAVORITE AUTHOR IS DAVE DAVE                                              |
+| MY FAVORITE AUTHOR IS MICHAEL MICHAEL                                        |
+| MY FAVORITE AUTHOR IS PATTI PATTI                                            |
+| MY FAVORITE AUTHOR IS DAVE DAVE                                              |
+| MY FAVORITE AUTHOR IS NEIL NEIL                                              |
+| MY FAVORITE AUTHOR IS RAYMOND RAYMOND                                        |
+| MY FAVORITE AUTHOR IS RAYMOND RAYMOND                                        |
+| MY FAVORITE AUTHOR IS DON DON                                                |
+| MY FAVORITE AUTHOR IS JOHN JOHN                                              |
+| MY FAVORITE AUTHOR IS DAVID DAVID                                            |
+| MY FAVORITE AUTHOR IS DAVID DAVID                                            |
+| MY FAVORITE AUTHOR IS DAN DAN                                                |
+| MY FAVORITE AUTHOR IS FREIDA FREIDA                                          |
+| MY FAVORITE AUTHOR IS GEORGE GEORGE                                          |
++------------------------------------------------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat("MY FAVORITE AUTHOR IS ",upper(author_fname),' ',upper(author_fname)) as yell from books;
++---------------------------------------+
+| yell                                  |
++---------------------------------------+
+| MY FAVORITE AUTHOR IS JHUMPA JHUMPA   |
+| MY FAVORITE AUTHOR IS NEIL NEIL       |
+| MY FAVORITE AUTHOR IS NEIL NEIL       |
+| MY FAVORITE AUTHOR IS JHUMPA JHUMPA   |
+| MY FAVORITE AUTHOR IS DAVE DAVE       |
+| MY FAVORITE AUTHOR IS DAVE DAVE       |
+| MY FAVORITE AUTHOR IS MICHAEL MICHAEL |
+| MY FAVORITE AUTHOR IS PATTI PATTI     |
+| MY FAVORITE AUTHOR IS DAVE DAVE       |
+| MY FAVORITE AUTHOR IS NEIL NEIL       |
+| MY FAVORITE AUTHOR IS RAYMOND RAYMOND |
+| MY FAVORITE AUTHOR IS RAYMOND RAYMOND |
+| MY FAVORITE AUTHOR IS DON DON         |
+| MY FAVORITE AUTHOR IS JOHN JOHN       |
+| MY FAVORITE AUTHOR IS DAVID DAVID     |
+| MY FAVORITE AUTHOR IS DAVID DAVID     |
+| MY FAVORITE AUTHOR IS DAN DAN         |
+| MY FAVORITE AUTHOR IS FREIDA FREIDA   |
+| MY FAVORITE AUTHOR IS GEORGE GEORGE   |
++---------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT COUNT(*) FROM books;
++----------+
+| COUNT(*) |
++----------+
+|       19 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT COUNT(author_fname) FROM books;
++---------------------+
+| COUNT(author_fname) |
++---------------------+
+|                  19 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT COUNT(DISTINCT author_fname) FROM books;
++------------------------------+
+| COUNT(DISTINCT author_fname) |
++------------------------------+
+|                           12 |
++------------------------------+
+1 row in set (0.02 sec)
+
+MariaDB [mydata]> SELECT COUNT(DISTINCT author_lname) FROM books;
++------------------------------+
+| COUNT(DISTINCT author_lname) |
++------------------------------+
+|                           11 |
++------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT COUNT(*) FROM books
+    -> WHERE title LIKE '%the%';
++----------+
+| COUNT(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, author_lname FROM books
+    -> GROUP BY author_lname
+    -> ;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| White Noise                                         | DeLillo        |
+| A Hologram for the King: A Novel                    | Eggers         |
+| Oblivion: Stories                                   | Foster Wallace |
+| Norse Mythology                                     | Gaiman         |
+| 10% Happier                                         | Harris         |
+| The Namesake                                        | Lahiri         |
+| Lincoln In The Bardo                                | Saunders       |
+| Just Kids                                           | Smith          |
+| Cannery Row                                         | Steinbeck      |
++-----------------------------------------------------+----------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select author_lname,count(*) from books group by author_lname;
++----------------+----------+
+| author_lname   | count(*) |
++----------------+----------+
+| Carver         |        2 |
+| Chabon         |        1 |
+| DeLillo        |        1 |
+| Eggers         |        3 |
+| Foster Wallace |        2 |
+| Gaiman         |        3 |
+| Harris         |        2 |
+| Lahiri         |        2 |
+| Saunders       |        1 |
+| Smith          |        1 |
+| Steinbeck      |        1 |
++----------------+----------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select * from books where released_year=(select min(released_year from books);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from books)' at line 1
+MariaDB [mydata]> select * from books where released_year=(select min(released_year) from books);
++---------+-------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title       | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+-------------+--------------+--------------+---------------+----------------+-------+
+|      14 | Cannery Row | John         | Steinbeck    |          1945 |             95 |   181 |
++---------+-------------+--------------+--------------+---------------+----------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT * FROM books
+    -> ORDER BY pages ASC LIMIT 1;
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver       |          1981 |             23 |   176 |
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT author_fname,
+    ->        author_lname,
+    ->        Min(released_year)
+    -> FROM   books
+    -> GROUP  BY author_lname,
+    ->           author_fname;
++--------------+----------------+--------------------+
+| author_fname | author_lname   | Min(released_year) |
++--------------+----------------+--------------------+
+| Raymond      | Carver         |               1981 |
+| Michael      | Chabon         |               2000 |
+| Don          | DeLillo        |               1985 |
+| Dave         | Eggers         |               2001 |
+| David        | Foster Wallace |               2004 |
+| Neil         | Gaiman         |               2001 |
+| Dan          | Harris         |               2014 |
+| Freida       | Harris         |               2001 |
+| Jhumpa       | Lahiri         |               1996 |
+| George       | Saunders       |               2017 |
+| Patti        | Smith          |               2010 |
+| John         | Steinbeck      |               1945 |
++--------------+----------------+--------------------+
+12 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT
+    ->   author_fname,
+    ->   author_lname,
+    ->   Max(pages)
+    -> FROM books
+    -> GROUP BY author_lname,
+    ->          author_fname;
++--------------+----------------+------------+
+| author_fname | author_lname   | Max(pages) |
++--------------+----------------+------------+
+| Raymond      | Carver         |        526 |
+| Michael      | Chabon         |        634 |
+| Don          | DeLillo        |        320 |
+| Dave         | Eggers         |        504 |
+| David        | Foster Wallace |        343 |
+| Neil         | Gaiman         |        465 |
+| Dan          | Harris         |        256 |
+| Freida       | Harris         |        428 |
+| Jhumpa       | Lahiri         |        291 |
+| George       | Saunders       |        367 |
+| Patti        | Smith          |        304 |
+| John         | Steinbeck      |        181 |
++--------------+----------------+------------+
+12 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT SUM(pages)
+    -> FROM books;
++------------+
+| SUM(pages) |
++------------+
+|       6623 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT author_fname,
+    ->        author_lname,
+    ->        Sum(pages)
+    -> FROM books
+    -> GROUP BY
+    ->     author_lname,
+    ->     author_fname;
++--------------+----------------+------------+
+| author_fname | author_lname   | Sum(pages) |
++--------------+----------------+------------+
+| Raymond      | Carver         |        702 |
+| Michael      | Chabon         |        634 |
+| Don          | DeLillo        |        320 |
+| Dave         | Eggers         |       1293 |
+| David        | Foster Wallace |        672 |
+| Neil         | Gaiman         |        977 |
+| Dan          | Harris         |        256 |
+| Freida       | Harris         |        428 |
+| Jhumpa       | Lahiri         |        489 |
+| George       | Saunders       |        367 |
+| Patti        | Smith          |        304 |
+| John         | Steinbeck      |        181 |
++--------------+----------------+------------+
+12 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT AVG(released_year)
+    -> FROM books;
++--------------------+
+| AVG(released_year) |
++--------------------+
+|          1999.7895 |
++--------------------+
+1 row in set (0.13 sec)
+
+MariaDB [mydata]> select avg(stock_quantity) from books group by released_year;
++---------------------+
+| avg(stock_quantity) |
++---------------------+
+|             95.0000 |
+|             23.0000 |
+|             49.0000 |
+|             12.0000 |
+|             97.0000 |
+|             68.0000 |
+|            134.3333 |
+|             66.0000 |
+|            172.0000 |
+|             92.0000 |
+|             55.0000 |
+|            154.0000 |
+|             26.0000 |
+|             29.0000 |
+|             43.0000 |
+|           1000.0000 |
++---------------------+
+16 rows in set (0.00 sec)
+
+MariaDB [mydata]> select count(*) from books;
++----------+
+| count(*) |
++----------+
+|       19 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                                         | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                           | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                                | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select sum(stock_quantity) from books;
++---------------------+
+| sum(stock_quantity) |
++---------------------+
+|                2450 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select avg(released_year) from books group by author_lname;
++--------------------+
+| avg(released_year) |
++--------------------+
+|          1985.0000 |
+|          2000.0000 |
+|          1985.0000 |
+|          2008.6667 |
+|          2004.5000 |
+|          2006.6667 |
+|          2007.5000 |
+|          1999.5000 |
+|          2017.0000 |
+|          2010.0000 |
+|          1945.0000 |
++--------------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select author_lname,avg(released_year) from books group by author_lname;
++----------------+--------------------+
+| author_lname   | avg(released_year) |
++----------------+--------------------+
+| Carver         |          1985.0000 |
+| Chabon         |          2000.0000 |
+| DeLillo        |          1985.0000 |
+| Eggers         |          2008.6667 |
+| Foster Wallace |          2004.5000 |
+| Gaiman         |          2006.6667 |
+| Harris         |          2007.5000 |
+| Lahiri         |          1999.5000 |
+| Saunders       |          2017.0000 |
+| Smith          |          2010.0000 |
+| Steinbeck      |          1945.0000 |
++----------------+--------------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select author_lname,avg(released_year),count(releaesd_year) from books group by author_lname;
+ERROR 1054 (42S22): Unknown column 'releaesd_year' in 'field list'
+MariaDB [mydata]> select author_lname,avg(released_year),count(released_year) from books group by author_lname;
++----------------+--------------------+----------------------+
+| author_lname   | avg(released_year) | count(released_year) |
++----------------+--------------------+----------------------+
+| Carver         |          1985.0000 |                    2 |
+| Chabon         |          2000.0000 |                    1 |
+| DeLillo        |          1985.0000 |                    1 |
+| Eggers         |          2008.6667 |                    3 |
+| Foster Wallace |          2004.5000 |                    2 |
+| Gaiman         |          2006.6667 |                    3 |
+| Harris         |          2007.5000 |                    2 |
+| Lahiri         |          1999.5000 |                    2 |
+| Saunders       |          2017.0000 |                    1 |
+| Smith          |          2010.0000 |                    1 |
+| Steinbeck      |          1945.0000 |                    1 |
++----------------+--------------------+----------------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                                         | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                           | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                                | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(author_fname," ",author_lname) from books where pages=(select max(pages) from books);
++---------------------------------------+
+| concat(author_fname," ",author_lname) |
++---------------------------------------+
+| Michael Chabon                        |
++---------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select released_year,count(released_year) as #books,avg(pages) as avg_pages) from books group by released_year;
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [mydata]> select released_year,count(released_year) as #books,avg(pages) as avg_pages from books group by released_year;
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [mydata]> select released_year,count(released_year),avg(pages) from books group by released_year;
++---------------+----------------------+------------+
+| released_year | count(released_year) | avg(pages) |
++---------------+----------------------+------------+
+|          1945 |                    1 |   181.0000 |
+|          1981 |                    1 |   176.0000 |
+|          1985 |                    1 |   320.0000 |
+|          1989 |                    1 |   526.0000 |
+|          1996 |                    1 |   198.0000 |
+|          2000 |                    1 |   634.0000 |
+|          2001 |                    3 |   443.3333 |
+|          2003 |                    2 |   249.5000 |
+|          2004 |                    1 |   329.0000 |
+|          2005 |                    1 |   343.0000 |
+|          2010 |                    1 |   304.0000 |
+|          2012 |                    1 |   352.0000 |
+|          2013 |                    1 |   504.0000 |
+|          2014 |                    1 |   256.0000 |
+|          2016 |                    1 |   304.0000 |
+|          2017 |                    1 |   367.0000 |
++---------------+----------------------+------------+
+16 rows in set (0.00 sec)
+
+MariaDB [mydata]> select released_year,count(released_year) as #_books,avg(pages) as avg_pages from books group by released_year;
+    ->
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [mydata]> select released_year as year,count(released_year) as /#_books,avg(pages) as avg_pages from books group by released_year;
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/' at line 1
+MariaDB [mydata]> select released_year as year,count(released_year) as books,avg(pages) as avg_pages from books group by released_year;
++------+-------+-----------+
+| year | books | avg_pages |
++------+-------+-----------+
+| 1945 |     1 |  181.0000 |
+| 1981 |     1 |  176.0000 |
+| 1985 |     1 |  320.0000 |
+| 1989 |     1 |  526.0000 |
+| 1996 |     1 |  198.0000 |
+| 2000 |     1 |  634.0000 |
+| 2001 |     3 |  443.3333 |
+| 2003 |     2 |  249.5000 |
+| 2004 |     1 |  329.0000 |
+| 2005 |     1 |  343.0000 |
+| 2010 |     1 |  304.0000 |
+| 2012 |     1 |  352.0000 |
+| 2013 |     1 |  504.0000 |
+| 2014 |     1 |  256.0000 |
+| 2016 |     1 |  304.0000 |
+| 2017 |     1 |  367.0000 |
++------+-------+-----------+
+16 rows in set (0.00 sec)
+
+MariaDB [mydata]> select released_year as year,count(released_year) as "#_books",avg(pages) as avg_pages from books group by released_year;
++------+---------+-----------+
+| year | #_books | avg_pages |
++------+---------+-----------+
+| 1945 |       1 |  181.0000 |
+| 1981 |       1 |  176.0000 |
+| 1985 |       1 |  320.0000 |
+| 1989 |       1 |  526.0000 |
+| 1996 |       1 |  198.0000 |
+| 2000 |       1 |  634.0000 |
+| 2001 |       3 |  443.3333 |
+| 2003 |       2 |  249.5000 |
+| 2004 |       1 |  329.0000 |
+| 2005 |       1 |  343.0000 |
+| 2010 |       1 |  304.0000 |
+| 2012 |       1 |  352.0000 |
+| 2013 |       1 |  504.0000 |
+| 2014 |       1 |  256.0000 |
+| 2016 |       1 |  304.0000 |
+| 2017 |       1 |  367.0000 |
++------+---------+-----------+
+16 rows in set (0.00 sec)
+
+
+MariaDB [mydata]> select author_lname,avg(released_year) from books group by author_lname;
++----------------+--------------------+
+| author_lname   | avg(released_year) |
++----------------+--------------------+
+| Carver         |          1985.0000 |
+| Chabon         |          2000.0000 |
+| DeLillo        |          1985.0000 |
+| Eggers         |          2008.6667 |
+| Foster Wallace |          2004.5000 |
+| Gaiman         |          2006.6667 |
+| Harris         |          2007.5000 |
+| Lahiri         |          1999.5000 |
+| Saunders       |          2017.0000 |
+| Smith          |          2010.0000 |
+| Steinbeck      |          1945.0000 |
++----------------+--------------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select author_lname,avg(released_year),count(releaesd_year) from books group by author_lname;
+ERROR 1054 (42S22): Unknown column 'releaesd_year' in 'field list'
+MariaDB [mydata]> select author_lname,avg(released_year),count(released_year) from books group by author_lname;
++----------------+--------------------+----------------------+
+| author_lname   | avg(released_year) | count(released_year) |
++----------------+--------------------+----------------------+
+| Carver         |          1985.0000 |                    2 |
+| Chabon         |          2000.0000 |                    1 |
+| DeLillo        |          1985.0000 |                    1 |
+| Eggers         |          2008.6667 |                    3 |
+| Foster Wallace |          2004.5000 |                    2 |
+| Gaiman         |          2006.6667 |                    3 |
+| Harris         |          2007.5000 |                    2 |
+| Lahiri         |          1999.5000 |                    2 |
+| Saunders       |          2017.0000 |                    1 |
+| Smith          |          2010.0000 |                    1 |
+| Steinbeck      |          1945.0000 |                    1 |
++----------------+--------------------+----------------------+
+11 rows in set (0.00 sec)
+
+MariaDB [mydata]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                                         | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                           | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                                | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select concat(author_fname," ",author_lname) from books where pages=(select max(pages) from books);
++---------------------------------------+
+| concat(author_fname," ",author_lname) |
++---------------------------------------+
+| Michael Chabon                        |
++---------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select released_year,count(released_year) as #books,avg(pages) as avg_pages) from books group by released_year;
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [mydata]> select released_year,count(released_year) as #books,avg(pages) as avg_pages from books group by released_year;
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [mydata]> select released_year,count(released_year),avg(pages) from books group by released_year;
++---------------+----------------------+------------+
+| released_year | count(released_year) | avg(pages) |
++---------------+----------------------+------------+
+|          1945 |                    1 |   181.0000 |
+|          1981 |                    1 |   176.0000 |
+|          1985 |                    1 |   320.0000 |
+|          1989 |                    1 |   526.0000 |
+|          1996 |                    1 |   198.0000 |
+|          2000 |                    1 |   634.0000 |
+|          2001 |                    3 |   443.3333 |
+|          2003 |                    2 |   249.5000 |
+|          2004 |                    1 |   329.0000 |
+|          2005 |                    1 |   343.0000 |
+|          2010 |                    1 |   304.0000 |
+|          2012 |                    1 |   352.0000 |
+|          2013 |                    1 |   504.0000 |
+|          2014 |                    1 |   256.0000 |
+|          2016 |                    1 |   304.0000 |
+|          2017 |                    1 |   367.0000 |
++---------------+----------------------+------------+
+16 rows in set (0.00 sec)
+
+MariaDB [mydata]> select released_year,count(released_year) as #_books,avg(pages) as avg_pages from books group by released_year;
+    ->
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [mydata]> select released_year as year,count(released_year) as /#_books,avg(pages) as avg_pages from books group by released_year;
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/' at line 1
+MariaDB [mydata]> select released_year as year,count(released_year) as books,avg(pages) as avg_pages from books group by released_year;
++------+-------+-----------+
+| year | books | avg_pages |
++------+-------+-----------+
+| 1945 |     1 |  181.0000 |
+| 1981 |     1 |  176.0000 |
+| 1985 |     1 |  320.0000 |
+| 1989 |     1 |  526.0000 |
+| 1996 |     1 |  198.0000 |
+| 2000 |     1 |  634.0000 |
+| 2001 |     3 |  443.3333 |
+| 2003 |     2 |  249.5000 |
+| 2004 |     1 |  329.0000 |
+| 2005 |     1 |  343.0000 |
+| 2010 |     1 |  304.0000 |
+| 2012 |     1 |  352.0000 |
+| 2013 |     1 |  504.0000 |
+| 2014 |     1 |  256.0000 |
+| 2016 |     1 |  304.0000 |
+| 2017 |     1 |  367.0000 |
++------+-------+-----------+
+16 rows in set (0.00 sec)
+
+MariaDB [mydata]> select released_year as year,count(released_year) as "#_books",avg(pages) as avg_pages from books group by released_year;
++------+---------+-----------+
+| year | #_books | avg_pages |
++------+---------+-----------+
+| 1945 |       1 |  181.0000 |
+| 1981 |       1 |  176.0000 |
+| 1985 |       1 |  320.0000 |
+| 1989 |       1 |  526.0000 |
+| 1996 |       1 |  198.0000 |
+| 2000 |       1 |  634.0000 |
+| 2001 |       3 |  443.3333 |
+| 2003 |       2 |  249.5000 |
+| 2004 |       1 |  329.0000 |
+| 2005 |       1 |  343.0000 |
+| 2010 |       1 |  304.0000 |
+| 2012 |       1 |  352.0000 |
+| 2013 |       1 |  504.0000 |
+| 2014 |       1 |  256.0000 |
+| 2016 |       1 |  304.0000 |
+| 2017 |       1 |  367.0000 |
++------+---------+-----------+
+16 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title FROM books
+    -> WHERE year != 2017;
+ERROR 1054 (42S22): Unknown column 'year' in 'where clause'
+MariaDB [mydata]> WHERE released_year != 2017;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE released_year != 2017' at line 1
+MariaDB [mydata]> SELECT title FROM books where released_year!=2017;
++-----------------------------------------------------+
+| title                                               |
++-----------------------------------------------------+
+| The Namesake                                        |
+| Norse Mythology                                     |
+| American Gods                                       |
+| Interpreter of Maladies                             |
+| A Hologram for the King: A Novel                    |
+| The Circle                                          |
+| The Amazing Adventures of Kavalier & Clay           |
+| Just Kids                                           |
+| A Heartbreaking Work of Staggering Genius           |
+| Coraline                                            |
+| What We Talk About When We Talk About Love: Stories |
+| Where I'm Calling From: Selected Stories            |
+| White Noise                                         |
+| Cannery Row                                         |
+| Oblivion: Stories                                   |
+| Consider the Lobster                                |
+| 10% Happier                                         |
+| fake_book                                           |
++-----------------------------------------------------+
+18 rows in set (0.00 sec)
+
+MariaDB [mydata]> Bye
+Ctrl-C -- exit!
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 46
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use mydata
+Database changed
+MariaDB [mydata]> SELECT title FROM books
+    -> WHERE title NOT LIKE 'W%';
++-------------------------------------------+
+| title                                     |
++-------------------------------------------+
+| The Namesake                              |
+| Norse Mythology                           |
+| American Gods                             |
+| Interpreter of Maladies                   |
+| A Hologram for the King: A Novel          |
+| The Circle                                |
+| The Amazing Adventures of Kavalier & Clay |
+| Just Kids                                 |
+| A Heartbreaking Work of Staggering Genius |
+| Coraline                                  |
+| Cannery Row                               |
+| Oblivion: Stories                         |
+| Consider the Lobster                      |
+| 10% Happier                               |
+| fake_book                                 |
+| Lincoln In The Bardo                      |
++-------------------------------------------+
+16 rows in set (0.01 sec)
+
+MariaDB [mydata]> SELECT * FROM books
+    -> WHERE released_year > 2000;
++---------+-------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                     | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                              | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                           | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                             | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       5 | A Hologram for the King: A Novel          | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                | Dave         | Eggers         |          2013 |             26 |   504 |
+|       8 | Just Kids                                 | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                  | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      15 | Oblivion: Stories                         | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                      | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                               | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                 | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                      | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-------------------------------------------+--------------+----------------+---------------+----------------+-------+
+13 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT * FROM books
+    -> WHERE author_lname='Eggers';
++---------+-------------------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                                     | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+-------------------------------------------+--------------+--------------+---------------+----------------+-------+
+|       5 | A Hologram for the King: A Novel          | Dave         | Eggers       |          2012 |            154 |   352 |
+|       6 | The Circle                                | Dave         | Eggers       |          2013 |             26 |   504 |
+|       9 | A Heartbreaking Work of Staggering Genius | Dave         | Eggers       |          2001 |            104 |   437 |
++---------+-------------------------------------------+--------------+--------------+---------------+----------------+-------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT * FROM books
+    -> WHERE author_lname='Eggers' AND
+    -> released_year > 2010;
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                            | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+|       5 | A Hologram for the King: A Novel | Dave         | Eggers       |          2012 |            154 |   352 |
+|       6 | The Circle                       | Dave         | Eggers       |          2013 |             26 |   504 |
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+2 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT * FROM books
+    -> WHERE author_lname='Eggers' AND
+    -> released_year > 2010 AND
+    -> title LIKE '%novel%';
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                            | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+|       5 | A Hologram for the King: A Novel | Dave         | Eggers       |          2012 |            154 |   352 |
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT * FROM books
+    -> WHERE author_lname='Eggers' &&
+    -> released_year > 2010;
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                            | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+|       5 | A Hologram for the King: A Novel | Dave         | Eggers       |          2012 |            154 |   352 |
+|       6 | The Circle                       | Dave         | Eggers       |          2013 |             26 |   504 |
++---------+----------------------------------+--------------+--------------+---------------+----------------+-------+
+2 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM
+    -> books WHERE released_year >= 2004 &&
+    -> released_year <= 2015;
++----------------------------------+---------------+
+| title                            | released_year |
++----------------------------------+---------------+
+| A Hologram for the King: A Novel |          2012 |
+| The Circle                       |          2013 |
+| Just Kids                        |          2010 |
+| Oblivion: Stories                |          2004 |
+| Consider the Lobster             |          2005 |
+| 10% Happier                      |          2014 |
++----------------------------------+---------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> WHERE released_year BETWEEN 2004 AND 2015;
++----------------------------------+---------------+
+| title                            | released_year |
++----------------------------------+---------------+
+| A Hologram for the King: A Novel |          2012 |
+| The Circle                       |          2013 |
+| Just Kids                        |          2010 |
+| Oblivion: Stories                |          2004 |
+| Consider the Lobster             |          2005 |
+| 10% Happier                      |          2014 |
++----------------------------------+---------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> WHERE released_year NOT BETWEEN 2004 AND 2015;
++-----------------------------------------------------+---------------+
+| title                                               | released_year |
++-----------------------------------------------------+---------------+
+| The Namesake                                        |          2003 |
+| Norse Mythology                                     |          2016 |
+| American Gods                                       |          2001 |
+| Interpreter of Maladies                             |          1996 |
+| The Amazing Adventures of Kavalier & Clay           |          2000 |
+| A Heartbreaking Work of Staggering Genius           |          2001 |
+| Coraline                                            |          2003 |
+| What We Talk About When We Talk About Love: Stories |          1981 |
+| Where I'm Calling From: Selected Stories            |          1989 |
+| White Noise                                         |          1985 |
+| Cannery Row                                         |          1945 |
+| fake_book                                           |          2001 |
+| Lincoln In The Bardo                                |          2017 |
++-----------------------------------------------------+---------------+
+13 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, author_lname FROM books
+    -> WHERE author_lname IN ('Carver', 'Lahiri', 'Smith');
++-----------------------------------------------------+--------------+
+| title                                               | author_lname |
++-----------------------------------------------------+--------------+
+| The Namesake                                        | Lahiri       |
+| Interpreter of Maladies                             | Lahiri       |
+| Just Kids                                           | Smith        |
+| What We Talk About When We Talk About Love: Stories | Carver       |
+| Where I'm Calling From: Selected Stories            | Carver       |
++-----------------------------------------------------+--------------+
+5 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> WHERE released_year NOT IN
+    -> (2000,2002,2004,2006,2008,2010,2012,2014,2016);
++-----------------------------------------------------+---------------+
+| title                                               | released_year |
++-----------------------------------------------------+---------------+
+| The Namesake                                        |          2003 |
+| American Gods                                       |          2001 |
+| Interpreter of Maladies                             |          1996 |
+| The Circle                                          |          2013 |
+| A Heartbreaking Work of Staggering Genius           |          2001 |
+| Coraline                                            |          2003 |
+| What We Talk About When We Talk About Love: Stories |          1981 |
+| Where I'm Calling From: Selected Stories            |          1989 |
+| White Noise                                         |          1985 |
+| Cannery Row                                         |          1945 |
+| Consider the Lobster                                |          2005 |
+| fake_book                                           |          2001 |
+| Lincoln In The Bardo                                |          2017 |
++-----------------------------------------------------+---------------+
+13 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> WHERE released_year >= 2000
+    -> AND released_year NOT IN
+    -> (2000,2002,2004,2006,2008,2010,2012,2014,2016);
++-------------------------------------------+---------------+
+| title                                     | released_year |
++-------------------------------------------+---------------+
+| The Namesake                              |          2003 |
+| American Gods                             |          2001 |
+| The Circle                                |          2013 |
+| A Heartbreaking Work of Staggering Genius |          2001 |
+| Coraline                                  |          2003 |
+| Consider the Lobster                      |          2005 |
+| fake_book                                 |          2001 |
+| Lincoln In The Bardo                      |          2017 |
++-------------------------------------------+---------------+
+8 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year FROM books
+    -> WHERE released_year >= 2000 AND
+    -> released_year % 2 != 0;
++-------------------------------------------+---------------+
+| title                                     | released_year |
++-------------------------------------------+---------------+
+| The Namesake                              |          2003 |
+| American Gods                             |          2001 |
+| The Circle                                |          2013 |
+| A Heartbreaking Work of Staggering Genius |          2001 |
+| Coraline                                  |          2003 |
+| Consider the Lobster                      |          2005 |
+| fake_book                                 |          2001 |
+| Lincoln In The Bardo                      |          2017 |
++-------------------------------------------+---------------+
+8 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, released_year,
+    ->        CASE
+    ->          WHEN released_year >= 2000 THEN 'Modern Lit'
+    ->          ELSE '20th Century Lit'
+    ->        END AS GENRE
+    -> FROM books;
++-----------------------------------------------------+---------------+------------------+
+| title                                               | released_year | GENRE            |
++-----------------------------------------------------+---------------+------------------+
+| The Namesake                                        |          2003 | Modern Lit       |
+| Norse Mythology                                     |          2016 | Modern Lit       |
+| American Gods                                       |          2001 | Modern Lit       |
+| Interpreter of Maladies                             |          1996 | 20th Century Lit |
+| A Hologram for the King: A Novel                    |          2012 | Modern Lit       |
+| The Circle                                          |          2013 | Modern Lit       |
+| The Amazing Adventures of Kavalier & Clay           |          2000 | Modern Lit       |
+| Just Kids                                           |          2010 | Modern Lit       |
+| A Heartbreaking Work of Staggering Genius           |          2001 | Modern Lit       |
+| Coraline                                            |          2003 | Modern Lit       |
+| What We Talk About When We Talk About Love: Stories |          1981 | 20th Century Lit |
+| Where I'm Calling From: Selected Stories            |          1989 | 20th Century Lit |
+| White Noise                                         |          1985 | 20th Century Lit |
+| Cannery Row                                         |          1945 | 20th Century Lit |
+| Oblivion: Stories                                   |          2004 | Modern Lit       |
+| Consider the Lobster                                |          2005 | Modern Lit       |
+| 10% Happier                                         |          2014 | Modern Lit       |
+| fake_book                                           |          2001 | Modern Lit       |
+| Lincoln In The Bardo                                |          2017 | Modern Lit       |
++-----------------------------------------------------+---------------+------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT title, stock_quantity,
+    ->     CASE
+    ->         WHEN stock_quantity BETWEEN 0 AND 50 THEN '*'
+    ->         WHEN stock_quantity BETWEEN 51 AND 100 THEN '**'
+    ->         ELSE '***'
+    ->     END AS STOCK
+    -> FROM books;
++-----------------------------------------------------+----------------+-------+
+| title                                               | stock_quantity | STOCK |
++-----------------------------------------------------+----------------+-------+
+| The Namesake                                        |             32 | *     |
+| Norse Mythology                                     |             43 | *     |
+| American Gods                                       |             12 | *     |
+| Interpreter of Maladies                             |             97 | **    |
+| A Hologram for the King: A Novel                    |            154 | ***   |
+| The Circle                                          |             26 | *     |
+| The Amazing Adventures of Kavalier & Clay           |             68 | **    |
+| Just Kids                                           |             55 | **    |
+| A Heartbreaking Work of Staggering Genius           |            104 | ***   |
+| Coraline                                            |            100 | **    |
+| What We Talk About When We Talk About Love: Stories |             23 | *     |
+| Where I'm Calling From: Selected Stories            |             12 | *     |
+| White Noise                                         |             49 | *     |
+| Cannery Row                                         |             95 | **    |
+| Oblivion: Stories                                   |            172 | ***   |
+| Consider the Lobster                                |             92 | **    |
+| 10% Happier                                         |             29 | *     |
+| fake_book                                           |            287 | ***   |
+| Lincoln In The Bardo                                |           1000 | ***   |
++-----------------------------------------------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> SELECT 10 != 10;
++----------+
+| 10 != 10 |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT 15 > 14 && 99 - 5 <= 94;
++-------------------------+
+| 15 > 14 && 99 - 5 <= 94 |
++-------------------------+
+|                       1 |
++-------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> SELECT 1 IN (5,3) || 9 BETWEEN 8 AND 10;
++----------------------------------+
+| 1 IN (5,3) || 9 BETWEEN 8 AND 10 |
++----------------------------------+
+|                                1 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select title from books where released_year<1980;
++-------------+
+| title       |
++-------------+
+| Cannery Row |
++-------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select title,released_year from books where released_year<1980;
++-------------+---------------+
+| title       | released_year |
++-------------+---------------+
+| Cannery Row |          1945 |
++-------------+---------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books where author_lname="eggers" || author_lname="chabon";
++-------------------------------------------+--------------+
+| title                                     | author_lname |
++-------------------------------------------+--------------+
+| A Hologram for the King: A Novel          | Eggers       |
+| The Circle                                | Eggers       |
+| The Amazing Adventures of Kavalier & Clay | Chabon       |
+| A Heartbreaking Work of Staggering Genius | Eggers       |
++-------------------------------------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books where author_lname="lahiri" && released_year>2000;
++--------------+--------------+
+| title        | author_lname |
++--------------+--------------+
+| The Namesake | Lahiri       |
++--------------+--------------+
+1 row in set (0.00 sec)
+
+MariaDB [mydata]> select title,pages from books where pages between 100 and 200;
++-----------------------------------------------------+-------+
+| title                                               | pages |
++-----------------------------------------------------+-------+
+| Interpreter of Maladies                             |   198 |
+| What We Talk About When We Talk About Love: Stories |   176 |
+| Cannery Row                                         |   181 |
++-----------------------------------------------------+-------+
+3 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books where author_lname like "c%" || 's%';
++-----------------------------------------------------+--------------+
+| title                                               | author_lname |
++-----------------------------------------------------+--------------+
+| The Amazing Adventures of Kavalier & Clay           | Chabon       |
+| What We Talk About When We Talk About Love: Stories | Carver       |
+| Where I'm Calling From: Selected Stories            | Carver       |
++-----------------------------------------------------+--------------+
+3 rows in set, 4 warnings (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname from books where author_lname like "c%" || author_lname like 's%';
++-----------------------------------------------------+--------------+
+| title                                               | author_lname |
++-----------------------------------------------------+--------------+
+| The Amazing Adventures of Kavalier & Clay           | Chabon       |
+| Just Kids                                           | Smith        |
+| What We Talk About When We Talk About Love: Stories | Carver       |
+| Where I'm Calling From: Selected Stories            | Carver       |
+| Cannery Row                                         | Steinbeck    |
+| Lincoln In The Bardo                                | Saunders     |
++-----------------------------------------------------+--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname
+    -> case
+    -> when title like '%stories%' then 'short stories'
+    -> when title like '%just kids%' then 'Memoir'
+    -> when title like '%A heartbreaking work%' then 'Memoir'
+    -> else 'Novel'
+    -> end as TYPE
+    -> from books;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'case
+when title like '%stories%' then 'short stories'
+when title like '%just kid' at line 2
+MariaDB [mydata]> select title,author_lname,
+    ->  case
+    ->     -> when title like '%stories%' then 'short stories'
+    ->     -> when title like '%just kids%' then 'Memoir'
+    ->     -> when title like '%A heartbreaking work%' then 'Memoir'
+    ->     -> else 'Novel'
+    ->     -> end as TYPE
+    ->     -> from books;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '> when title like '%stories%' then 'short stories'
+    -> when title like '%just' at line 3
+MariaDB [mydata]>  select title,author_lname,
+    -> case
+    ->  when title like '%stories%' then 'short stories'
+    ->  when title like '%just kids%' then 'Memoir'
+    ->  when title like '%A heartbreaking work%' then 'Memoir'
+    -> else 'Novel'
+    ->  end as TYPE
+    ->  from books;
++-----------------------------------------------------+----------------+---------------+
+| title                                               | author_lname   | TYPE          |
++-----------------------------------------------------+----------------+---------------+
+| The Namesake                                        | Lahiri         | Novel         |
+| Norse Mythology                                     | Gaiman         | Novel         |
+| American Gods                                       | Gaiman         | Novel         |
+| Interpreter of Maladies                             | Lahiri         | Novel         |
+| A Hologram for the King: A Novel                    | Eggers         | Novel         |
+| The Circle                                          | Eggers         | Novel         |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         | Novel         |
+| Just Kids                                           | Smith          | Memoir        |
+| A Heartbreaking Work of Staggering Genius           | Eggers         | Memoir        |
+| Coraline                                            | Gaiman         | Novel         |
+| What We Talk About When We Talk About Love: Stories | Carver         | short stories |
+| Where I'm Calling From: Selected Stories            | Carver         | short stories |
+| White Noise                                         | DeLillo        | Novel         |
+| Cannery Row                                         | Steinbeck      | Novel         |
+| Oblivion: Stories                                   | Foster Wallace | short stories |
+| Consider the Lobster                                | Foster Wallace | Novel         |
+| 10% Happier                                         | Harris         | Novel         |
+| fake_book                                           | Harris         | Novel         |
+| Lincoln In The Bardo                                | Saunders       | Novel         |
++-----------------------------------------------------+----------------+---------------+
+19 rows in set (0.00 sec)
+
+MariaDB [mydata]> select title,author_lname,concat(count(*),' ',book) as count from books group by author_lname;
+ERROR 1054 (42S22): Unknown column 'book' in 'field list'
+MariaDB [mydata]> select title,author_lname,count(*) as count from books group by author_lname;
++-----------------------------------------------------+----------------+-------+
+| title                                               | author_lname   | count |
++-----------------------------------------------------+----------------+-------+
+| What We Talk About When We Talk About Love: Stories | Carver         |     2 |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |     1 |
+| White Noise                                         | DeLillo        |     1 |
+| A Hologram for the King: A Novel                    | Eggers         |     3 |
+| Oblivion: Stories                                   | Foster Wallace |     2 |
+| Norse Mythology                                     | Gaiman         |     3 |
+| 10% Happier                                         | Harris         |     2 |
+| The Namesake                                        | Lahiri         |     2 |
+| Lincoln In The Bardo                                | Saunders       |     1 |
+| Just Kids                                           | Smith          |     1 |
+| Cannery Row                                         | Steinbeck      |     1 |
++-----------------------------------------------------+----------------+-------+
+11 rows in set (0.00 sec)
